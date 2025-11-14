@@ -105,85 +105,208 @@
     @keyframes wave{0%{transform:rotate(0)}15%{transform:rotate(14deg)}30%{transform:rotate(-8deg)}45%{transform:rotate(14deg)}60%{transform:rotate(-4deg)}100%{transform:rotate(0)}}
 
     /* utility */
-    pre{background:#071024;padding:12px;border-radius:8px;color:var(--muted);overflow:auto}
-    code{font-family:var(--mono);font-size:13px}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <!--
+    Beautiful GitHub Pages profile for Kha0sK1ng
+    - Single-file (index.html)
+    - Animations, responsive layout, project cards and GitHub stats
+    - Comments in English for your code comments policy
+    Edit the highlighted sections (PLACEHOLDER) to personalize.
+  -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kha0sK1ng — Software Developer</title>
+  <meta name="description" content="Portfolio of Kha0sK1ng — Rust & low-level developer" />  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50%25' x='50%25' dominant-baseline='middle' text-anchor='middle' font-size='36'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E">  <style>
+    /* Theme */
+    :root{--bg:#071020;--card:#0b1220;--muted:#9fb0c8;--accent1:#7c3aed;--accent2:#06b6d4;--glass:rgba(255,255,255,0.03);--radius:16px}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:linear-gradient(180deg,#041226 0%,#07102a 100%);color:#e6eef8;-webkit-font-smoothing:antialiased;display:flex;align-items:flex-start;justify-content:center;padding:36px}
+
+    .wrap{width:100%;max-width:1100px}
+    .site{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:20px;padding:26px;box-shadow:0 20px 60px rgba(2,6,23,0.7);border:1px solid rgba(255,255,255,0.03);overflow:hidden}
+
+    /* animated gradient background */
+    .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;filter:blur(60px);opacity:0.6}
+    .blob{position:absolute;width:520px;height:520px;border-radius:50%;mix-blend-mode:screen;transform:translate(-20%, -10%)}
+    .b1{background:radial-gradient(circle at 30% 30%, rgba(124,58,237,0.55), transparent 30%)}
+    .b2{background:radial-gradient(circle at 70% 70%, rgba(6,182,212,0.45), transparent 30%);left:40%;top:20%}
+    @keyframes floaty{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+    .blob{animation:floaty 9s ease-in-out infinite}
+
+    .grid{display:grid;grid-template-columns:1fr 340px;gap:20px;position:relative;z-index:1}
+    @media (max-width:960px){.grid{grid-template-columns:1fr}}
+
+    /* Left column */
+    .hero{padding:8px 6px}
+    .title{font-size:32px;margin:6px 0}
+    .sub{color:var(--muted);margin:6px 0 18px}
+
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{background:var(--glass);padding:8px 10px;border-radius:999px;font-weight:600;color:var(--muted);font-size:13px}
+
+    .controls{display:flex;gap:12px;margin-top:18px}
+    .btn{padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700;border:0;cursor:pointer}
+    .primary{background:linear-gradient(90deg,var(--accent1),#5b21b6);box-shadow:0 10px 30px rgba(124,58,237,0.18);color:white}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* features */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
+    @media (max-width:820px){.features{grid-template-columns:repeat(2,1fr)}}
+    .feature{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);min-height:88px;display:flex;flex-direction:column;justify-content:center}
+    .feature h4{margin:0 0 6px 0}
+    .feature p{margin:0;color:var(--muted);font-size:13px}
+
+    /* project list */
+    .projects{margin-top:20px;display:grid;gap:12px}
+    .proj{display:flex;gap:12px;align-items:center;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);transition:transform .18s ease, box-shadow .18s}
+    .proj:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(2,6,23,0.6)}
+    .proj .meta{flex:1}
+    .proj .lang{font-size:12px;color:var(--muted)}
+
+    /* Right column profile */
+    .card-profile{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);text-align:center}
+    .avatar{width:120px;height:120px;border-radius:16px;overflow:hidden;margin:0 auto 10px auto;border:1px solid rgba(255,255,255,0.04)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .name{font-weight:800}
+    .loc{color:var(--muted);font-size:13px}
+    .socials{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    .socials a{padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+
+    /* animated underline */
+    .fancy{display:inline-block;position:relative}
+    .fancy:after{content:'';position:absolute;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));bottom:-6px;border-radius:8px;opacity:.2;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.9,.3,1)}
+    .fancy:hover:after{transform:scaleX(1)}
+
+    footer{color:var(--muted);text-align:center;margin-top:18px;font-size:13px}
+
+    /* small responsive tweaks */
+    @media (max-width:520px){.features{grid-template-columns:1fr}.title{font-size:22px}}
+
+    /* subtle entrance animations */
+    .reveal{opacity:0;transform:translateY(10px);animation:reveal .72s forwards}
+    .reveal.delay-1{animation-delay:.12s}.reveal.delay-2{animation-delay:.24s}.reveal.delay-3{animation-delay:.36s}
+    @keyframes reveal{to{opacity:1;transform:none}}
   </style></head>
 <body>
-  <main class="container">
-    <section class="card" role="region" aria-label="intro"><div class="hero">
-    <h1>Hi, I’m <strong>Kha0sK1ng</strong> <span class="wave">👋</span></h1>
-    <p class="lead">Beginner software developer learning Rust. Building small projects, sharing code and experiments.</p>
+  <div class="hero-bg">
+    <div class="blob b1" style="left:-8%;top:-12%"></div>
+    <div class="blob b2" style="right:-6%;bottom:-8%"></div>
+  </div>  <div class="wrap">
+    <div class="site">
+      <div class="grid"><div class="hero">
+      <h1 class="title reveal">Hi — I’m <span class="fancy">Kha0sK1ng</span> <span style="font-size:20px">👋</span></h1>
+      <p class="sub reveal delay-1">Beginner software developer focused on <strong>Rust</strong>, embedded systems and low-level C++ work. Building demos, CLIs and experimenting with ESP32.</p>
 
-    <div class="chips" aria-hidden>
-      <span class="chip">Rust</span>
-      <span class="chip">Embedded</span>
-      <span class="chip">CLI</span>
-      <span class="chip">Portfolio</span>
-    </div>
-
-    <div class="controls">
-      <a class="btn btn-primary" href="#projects">My projects</a>
-      <a class="btn btn-outline" href="#contact">Contact</a>
-    </div>
-
-    <!-- Small projects preview -->
-    <section id="projects" style="margin-top:22px">
-      <h3 style="margin:0 0 10px 0;font-size:16px">Featured</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
-        <article style="background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
-          <strong>Rust ESP32 demo</strong>
-          <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Tiny example: UART -> logger</p>
-        </article>
-        <article style="background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)">
-          <strong>CLI Tool</strong>
-          <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Simple task manager in Rust</p>
-        </article>
+      <div class="badges reveal delay-2">
+        <span class="badge">Rust</span>
+        <span class="badge">Embedded</span>
+        <span class="badge">C++</span>
+        <span class="badge">Lua</span>
       </div>
-    </section>
 
-    <p class="foot">This site is a simple GitHub Pages starter. Edit <code>index.html</code> in your repository to customize.</p>
+      <div class="controls reveal delay-3" style="margin-top:18px">
+        <a class="btn primary" href="#projects">See projects</a>
+        <a class="btn ghost" href="#contact">Contact</a>
+      </div>
+
+      <div class="features reveal delay-1">
+        <div class="feature">
+          <h4>🛰 Embedded experiments</h4>
+          <p>ESP32 prototypes and UART demos (Rust).</p>
+        </div>
+        <div class="feature">
+          <h4>🔧 CLI & Tools</h4>
+          <p>Small command-line utilities for daily workflow.</p>
+        </div>
+        <div class="feature">
+          <h4>📚 Learning</h4>
+          <p>Memory safety, ownership, concurrency in Rust.</p>
+        </div>
+      </div>
+
+      <section id="projects" style="margin-top:18px">
+        <h3 style="margin:0 0 10px 0">Featured projects</h3>
+        <div class="projects">
+
+          <!-- Project: SnakeMem (pinned) -->
+          <a class="proj" href="https://github.com/Kha0sK1ng/SnakeMem" target="_blank" rel="noopener noreferrer">
+            <div class="meta">
+              <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+                <strong>SnakeMem</strong>
+                <span class="lang">C++</span>
+              </div>
+              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">Lightweight library for process memory manipulation on Windows.</p>
+            </div>
+          </a>
+
+          <!-- Project: Placeholder Rust ESP32 demo -->
+          <a class="proj" href="https://github.com/Kha0sK1ng" target="_blank" rel="noopener noreferrer">
+            <div class="meta">
+              <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+                <strong>Rust ESP32 demo</strong>
+                <span class="lang">Rust</span>
+              </div>
+              <p style="margin:6px 0 0 0;color:var(--muted);font-size:13px">UART logging demo — replace with your repo link and README screenshot.</p>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <p style="margin-top:16px;color:var(--muted);font-size:13px">Tip: add screenshots to each repo’s README to show inside project cards.</p>
+
+    </div>
+
+    <aside class="card-profile reveal delay-2">
+      <div class="avatar">
+        <!-- PLACEHOLDER: replace src with your GitHub avatar url or local image -->
+        <img src="https://avatars.githubusercontent.com/u/0?s=400&v=4" alt="avatar">
+      </div>
+      <div class="name">Kha0sK1ng</div>
+      <div class="loc">Baku · C++ Programmer</div>
+
+      <div style="margin-top:10px;color:var(--muted);font-size:13px">Beginners don't die — Rust, C++, Lua</div>
+
+      <div class="socials" role="navigation" aria-label="social links">
+        <a href="https://github.com/Kha0sK1ng" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://t.me/kha0sk1ng" target="_blank" rel="noopener">Telegram</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div style="margin-top:12px">
+        <!-- Example: github-readme-stats images (optional) -->
+        <img src="https://github-readme-stats.vercel.app/api?username=Kha0sK1ng&show_icons=true&theme=dark&locale=en" alt="stats" style="width:100%;border-radius:10px;margin-top:10px;border:1px solid rgba(255,255,255,0.03)">
+      </div>
+    </aside>
+
   </div>
 
-  <aside class="profile" aria-label="profile card">
-    <div class="avatar">
-      <!-- Replace the src with your avatar image or GitHub avatar -->
-      <img src="https://avatars.githubusercontent.com/u/0?s=400&v=4" alt="Avatar">
-    </div>
+  <section id="contact" style="margin-top:20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
     <div>
-      <div style="font-weight:700">Kha0sK1ng</div>
-      <div class="hobby">Learning Rust · RustRover user</div>
+      <h3 style="margin:0">Contact</h3>
+      <p style="margin:6px 0 0 0;color:var(--muted)">Telegram: <a href="https://t.me/kha0sk1ng">@kha0sk1ng</a> · Discord: <code>kha0sk1ng</code></p>
     </div>
+    <div style="color:var(--muted);font-size:13px">Available for collaboration · Open to small projects</div>
+  </section>
 
-    <div class="socials" role="navigation" aria-label="social links">
-      <a href="https://github.com/Kha0sK1ng" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://t.me/kha0sk1ng" target="_blank" rel="noopener">Telegram</a>
-      <a href="#contact">Contact</a>
-    </div>
+  <footer>
+    <div style="margin-top:10px">Made with ❤️ — Edit <code>index.html</code> in your repo to customize.</div>
+  </footer>
 
-    <div style="margin-top:6px;font-size:13px;color:var(--muted)">Available for collaboration · Open to small projects</div>
-  </aside>
+</div>
 
-</section>
-
-<!-- Contact / footer block -->
-<section id="contact" style="margin-top:18px;max-width:760px;margin-left:auto;margin-right:auto">
-  <h3 style="margin:0 0 8px 0">Contact</h3>
-  <p style="margin:0 0 12px 0;color:var(--muted)">Want to work together or see the source? Reach me on Telegram or open an issue in my GitHub repo.</p>
-  <pre><code>git clone https://github.com/Kha0sK1ng/Kha0sK1ng.github.io.git
-
-edit index.html
-
-commit & push
-
-</code></pre> </section>
-
-  </main>  <script>
-    // Small client-side enhancement: smooth scroll for same-page links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const target = document.querySelector(a.getAttribute('href'));
-        if(target){e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'});} 
-      });
-    });
+  </div>  <script>
+    // Small enhancement: replace avatar with GitHub avatar dynamically
+    (function(){
+      const avatar = document.querySelector('.avatar img');
+      fetch('https://api.github.com/users/Kha0sK1ng')
+        .then(r=>r.json())
+        .then(json=>{ if(json && json.avatar_url){ avatar.src = json.avatar_url; } })
+        .catch(()=>{});
+    })();
   </script></body>
 </html>
