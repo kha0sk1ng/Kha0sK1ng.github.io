@@ -6,7 +6,7 @@
     <title>Kha0sK1ng - Crafting Code with Precision and Chaos</title>
     <style>
         /* Import fonts */
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&family=Fira+Code:wght@400;500;600&display=swap');
         
         /* Reset and base styles */
         * {
@@ -18,12 +18,18 @@
         :root {
             --bg-dark: #0a0a0f;
             --bg-medium: #14141f;
+            --bg-card: #1a1a2e;
             --accent-primary: #ff6b35;
             --accent-secondary: #f7931e;
             --accent-rust: #ce412b;
+            --accent-lua: #000080;
+            --accent-cpp: #00599c;
             --text-primary: #e8e8e8;
             --text-secondary: #a0a0a0;
+            --text-muted: #6b6b7b;
             --glow-color: rgba(255, 107, 53, 0.4);
+            --success: #4ade80;
+            --info: #60a5fa;
         }
         
         body {
@@ -34,7 +40,7 @@
             line-height: 1.6;
         }
         
-        /* Animated background */
+        /* Animated background with matrix effect */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -55,7 +61,17 @@
             background: radial-gradient(circle, var(--accent-rust) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: bgScroll 20s linear infinite;
-            opacity: 0.1;
+            opacity: 0.08;
+        }
+        
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, var(--bg-dark) 100%);
         }
         
         @keyframes bgScroll {
@@ -63,38 +79,94 @@
             100% { transform: translate(50px, 50px) rotate(360deg); }
         }
         
-        /* Glowing orbs */
+        /* Glowing orbs with improved animation */
         .orb {
             position: fixed;
             border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
+            filter: blur(100px);
+            opacity: 0.25;
             z-index: -1;
-            animation: float 20s infinite ease-in-out;
+            animation: float 25s infinite ease-in-out;
         }
         
         .orb1 {
-            width: 400px;
-            height: 400px;
-            background: var(--accent-primary);
-            top: 10%;
-            left: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--accent-primary), transparent);
+            top: 5%;
+            left: 5%;
             animation-delay: 0s;
         }
         
         .orb2 {
-            width: 300px;
-            height: 300px;
-            background: var(--accent-rust);
-            bottom: 20%;
-            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-rust), transparent);
+            bottom: 10%;
+            right: 5%;
             animation-delay: 5s;
         }
         
+        .orb3 {
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, var(--accent-secondary), transparent);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+        
         @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            33% { transform: translate(30px, -30px); }
-            66% { transform: translate(-20px, 20px); }
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -40px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(30px, -20px) scale(1.05); }
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            z-index: 2000;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: var(--accent-primary);
+            transform: scale(1.1);
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--accent-primary);
+            margin: 5px 0;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+        
+        .mobile-menu-btn:hover span {
+            background: white;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
         }
         
         /* Navigation */
@@ -103,15 +175,23 @@
             top: 0;
             width: 100%;
             padding: 1.5rem 5%;
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 107, 53, 0.1);
+            transition: all 0.3s;
+        }
+        
+        nav.scrolled {
+            padding: 1rem 5%;
+            background: rgba(10, 10, 15, 0.95);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
         }
         
         nav ul {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 3rem;
             list-style: none;
         }
@@ -120,52 +200,60 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
             position: relative;
+            padding: 0.5rem 0;
         }
         
         nav a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--accent-primary);
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
             transition: width 0.3s;
         }
         
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: var(--accent-primary);
         }
         
-        nav a:hover::after {
+        nav a:hover::after, nav a.active::after {
             width: 100%;
         }
         
         /* Hero section */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 0 2rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            z-index: 10;
         }
         
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(3rem, 10vw, 7rem);
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-rust));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: glow 3s ease-in-out infinite;
+            text-shadow: 0 0 80px var(--glow-color);
         }
         
         @keyframes glow {
@@ -174,17 +262,26 @@
         }
         
         .hero .tagline {
-            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-size: clamp(1.1rem, 2.5vw, 1.8rem);
             color: var(--text-secondary);
             margin-bottom: 1rem;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Fira Code', monospace;
         }
         
         .hero .subtitle {
-            font-size: clamp(1.2rem, 2.5vw, 2rem);
-            margin-bottom: 3rem;
+            font-size: clamp(1.3rem, 3vw, 2.2rem);
+            margin-bottom: 2rem;
             font-style: italic;
             color: var(--text-primary);
+            line-height: 1.4;
+        }
+        
+        .hero .description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
         }
         
         /* Typing animation */
@@ -192,6 +289,8 @@
             display: inline-block;
             border-right: 3px solid var(--accent-primary);
             animation: blink 0.7s infinite;
+            min-width: 200px;
+            text-align: left;
         }
         
         @keyframes blink {
@@ -205,16 +304,17 @@
             gap: 1.5rem;
             flex-wrap: wrap;
             justify-content: center;
+            margin-bottom: 3rem;
         }
         
         .btn {
-            padding: 1rem 2.5rem;
+            padding: 1.2rem 3rem;
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-rust));
             color: white;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 1.05rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
@@ -222,6 +322,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
         
         .btn::before {
@@ -235,22 +336,68 @@
             background: rgba(255, 255, 255, 0.3);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
+            z-index: -1;
         }
         
         .btn:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
         
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px var(--glow-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--glow-color);
         }
         
         .btn-secondary {
             background: transparent;
             border: 2px solid var(--accent-primary);
             color: var(--accent-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--accent-primary);
+            color: white;
+        }
+        
+        /* Status badges */
+        .status-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .status-badge {
+            padding: 0.8rem 1.5rem;
+            background: var(--bg-card);
+            border: 2px solid var(--success);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink-dot 1.5s infinite;
+        }
+        
+        @keyframes blink-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
         
         /* Section base */
@@ -261,36 +408,91 @@
         }
         
         .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--text-muted);
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         /* About section */
         .about-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
         }
         
-        .about-text h3 {
-            font-size: 2rem;
+        .about-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-rust));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: -1;
+        }
+        
+        .about-card:hover::before {
+            opacity: 1;
+        }
+        
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px var(--glow-color);
+        }
+        
+        .about-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: bounce-slow 3s infinite;
+        }
+        
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .about-card h3 {
+            font-size: 1.8rem;
             margin-bottom: 1.5rem;
             color: var(--accent-primary);
         }
         
-        .about-text p {
-            font-size: 1.1rem;
+        .about-card p, .about-card li {
+            font-size: 1.05rem;
             line-height: 1.8;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         
         .tech-stack {
@@ -301,45 +503,130 @@
         }
         
         .tech-badge {
-            padding: 0.5rem 1.5rem;
-            background: var(--bg-medium);
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(206, 65, 43, 0.2));
             border: 2px solid var(--accent-primary);
             border-radius: 25px;
             color: var(--accent-primary);
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: all 0.3s;
+            cursor: default;
         }
         
         .tech-badge:hover {
-            background: var(--accent-primary);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-rust));
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px var(--glow-color);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px var(--glow-color);
         }
         
         .goals-list {
             list-style: none;
+            margin-top: 1.5rem;
         }
         
         .goals-list li {
-            padding: 1rem;
+            padding: 1.2rem 1.5rem;
             margin-bottom: 1rem;
-            background: var(--bg-medium);
+            background: rgba(255, 107, 53, 0.05);
             border-left: 4px solid var(--accent-primary);
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
         .goals-list li:hover {
-            transform: translateX(10px);
-            background: rgba(255, 107, 53, 0.1);
+            transform: translateX(15px);
+            background: rgba(255, 107, 53, 0.15);
+            border-left-width: 6px;
         }
         
         .goals-list li::before {
             content: '⚡';
-            margin-right: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+        
+        /* Journey Timeline */
+        .journey-section {
+            max-width: 1000px;
+            margin: 4rem auto 0;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-rust));
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 15px;
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .timeline-content:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px var(--glow-color);
+        }
+        
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid var(--bg-dark);
+            z-index: 10;
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+        
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
         
         /* Projects section */
@@ -347,18 +634,19 @@
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2.5rem;
         }
         
         .project-card {
-            background: var(--bg-medium);
-            border-radius: 15px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 107, 53, 0.2);
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 2px solid rgba(255, 107, 53, 0.2);
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .project-card::before {
@@ -368,7 +656,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.15), transparent);
             transition: left 0.5s;
         }
         
@@ -377,41 +665,100 @@
         }
         
         .project-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02);
             border-color: var(--accent-primary);
-            box-shadow: 0 15px 40px var(--glow-color);
+            box-shadow: 0 20px 50px var(--glow-color);
+        }
+        
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .project-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+        }
+        
+        .project-status {
+            margin-left: auto;
+            padding: 0.4rem 1rem;
+            background: rgba(74, 222, 128, 0.2);
+            color: var(--success);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--success);
+        }
+        
+        .project-status.learning {
+            background: rgba(96, 165, 250, 0.2);
+            color: var(--info);
+            border-color: var(--info);
         }
         
         .project-card h3 {
-            font-size: 1.8rem;
-            color: var(--accent-primary);
+            font-size: 1.9rem;
+            color: var(--text-primary);
             margin-bottom: 1rem;
         }
         
         .project-card p {
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 1.5rem;
+            font-size: 1.05rem;
         }
         
         .project-tech {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
         }
         
         .project-tech span {
-            padding: 0.3rem 0.8rem;
-            background: rgba(255, 107, 53, 0.2);
-            border-radius: 15px;
-            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 20px;
+            font-size: 0.9rem;
             color: var(--accent-primary);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .project-tech span:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .project-link {
+            padding: 0.7rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .project-link:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-3px);
         }
         
         /* Skills section */
@@ -421,11 +768,11 @@
         }
         
         .skill-category {
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
         
         .skill-category h3 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--accent-primary);
             margin-bottom: 2rem;
             display: flex;
@@ -435,109 +782,376 @@
         
         .skill-bars {
             display: grid;
-            gap: 1.5rem;
+            gap: 2rem;
         }
         
         .skill-bar {
-            background: var(--bg-medium);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 107, 53, 0.2);
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .skill-bar:hover {
+            border-color: var(--accent-primary);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px var(--glow-color);
         }
         
         .skill-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.8rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
         
         .skill-name {
             font-weight: 600;
             color: var(--text-primary);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .skill-level {
             color: var(--accent-primary);
             font-weight: 600;
+            font-size: 1rem;
+            padding: 0.3rem 1rem;
+            background: rgba(255, 107, 53, 0.15);
+            border-radius: 20px;
         }
         
         .progress-bar {
-            height: 8px;
+            height: 12px;
             background: rgba(255, 107, 53, 0.1);
             border-radius: 10px;
             overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-rust), var(--accent-primary));
+            background: linear-gradient(90deg, var(--accent-rust), var(--accent-primary), var(--accent-secondary));
             border-radius: 10px;
-            transition: width 1s ease-out;
+            transition: width 1.5s ease-out;
             width: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: progress-shine 2s infinite;
+        }
+        
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .skill-description {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* Learning Resources Section */
+        .resources-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .resource-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 40px var(--glow-color);
+        }
+        
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card h4 {
+            font-size: 1.4rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .resource-card a {
+            color: var(--accent-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .resource-card a:hover {
+            color: var(--accent-primary);
+            text-decoration: underline;
+        }
+        
+        /* Stats Section */
+        .stats-grid {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: var(--accent-primary);
+            box-shadow: 0 15px 40px var(--glow-color);
+        }
+        
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
         
         /* Contact section */
         .contact-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             text-align: center;
         }
         
         .contact-text {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             color: var(--text-secondary);
             margin-bottom: 3rem;
             line-height: 1.8;
         }
         
         .social-links {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            flex-wrap: wrap;
+            margin-bottom: 3rem;
         }
         
         .social-link {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: 1rem;
-            padding: 1.5rem 2.5rem;
-            background: var(--bg-medium);
+            padding: 2rem;
+            background: var(--bg-card);
             border: 2px solid var(--accent-primary);
-            border-radius: 12px;
+            border-radius: 20px;
             color: var(--text-primary);
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
-            transition: all 0.3s;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+            z-index: 0;
+        }
+        
+        .social-link:hover::before {
+            width: 500px;
+            height: 500px;
         }
         
         .social-link:hover {
-            background: var(--accent-primary);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px var(--glow-color);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--glow-color);
+            color: white;
         }
         
         .social-icon {
-            font-size: 2rem;
+            font-size: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .social-link span:last-child {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 3rem auto;
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px var(--glow-color);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
         }
         
         /* Footer */
         footer {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             background: var(--bg-medium);
-            border-top: 1px solid rgba(255, 107, 53, 0.2);
+            border-top: 2px solid rgba(255, 107, 53, 0.2);
+            margin-top: 4rem;
         }
         
         footer p {
             color: var(--text-secondary);
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
         }
         
         .rust-logo {
             color: var(--accent-rust);
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-primary);
         }
         
         /* Scroll indicator */
@@ -547,6 +1161,7 @@
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
+            cursor: pointer;
         }
         
         @keyframes bounce {
@@ -556,38 +1171,143 @@
         }
         
         .scroll-indicator svg {
-            width: 30px;
-            height: 50px;
+            width: 35px;
+            height: 60px;
             stroke: var(--accent-primary);
             fill: none;
             stroke-width: 2;
         }
         
-        /* Responsive design */
+        /* Code snippet styles */
+        .code-snippet {
+            background: var(--bg-medium);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-primary);
+            margin: 2rem 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            overflow-x: auto;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            section {
+                padding: 4rem 3%;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                padding-left: 70px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+        
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                padding: 1rem 2rem;
+            }
+            
             nav ul {
-                gap: 1.5rem;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--bg-medium);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                padding: 2rem;
+                transition: right 0.4s;
+                box-shadow: -5px 0 30px rgba(0, 0, 0, 0.5);
+                z-index: 1500;
+            }
+            
+            nav ul.active {
+                right: 0;
             }
             
             nav a {
-                font-size: 0.8rem;
+                font-size: 1.2rem;
+                padding: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
             }
             
             .about-content {
                 grid-template-columns: 1fr;
-                gap: 2rem;
             }
             
             .projects-grid {
                 grid-template-columns: 1fr;
             }
             
-            .btn-group {
-                flex-direction: column;
+            .social-links {
+                grid-template-columns: 1fr;
             }
             
-            .social-links {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tech-stack {
+                justify-content: center;
+            }
+            
+            .status-badges {
                 flex-direction: column;
+                align-items: center;
             }
         }
         
@@ -609,6 +1329,53 @@
                 transform: translateY(0);
             }
         }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-rust));
+            border-radius: 6px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, var(--accent-secondary), var(--accent-primary));
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tooltip:hover::after {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -616,28 +1383,55 @@
     <div class="bg-animation"></div>
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    
+    <!-- Mobile menu button -->
+    <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     
     <!-- Navigation -->
     <nav>
         <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#journey">Journey</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
+            <li><a href="#resources">Resources</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
     
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <h1>Kha0sK1ng</h1>
-        <p class="tagline">&lt;<span class="typing-text">Rustacean</span>/&gt;</p>
-        <p class="subtitle">"Code is art, and I'm the chaos behind it."</p>
-        <div class="btn-group">
-            <a href="#projects" class="btn">View Projects</a>
-            <a href="https://github.com/Kha0sK1ng" target="_blank" class="btn btn-secondary">GitHub</a>
+        <div class="hero-content">
+            <h1>Kha0sK1ng</h1>
+            <p class="tagline">&lt;<span class="typing-text">Beginner Developer</span>/&gt;</p>
+            <p class="subtitle">"Code is art, and I'm the chaos behind it."</p>
+            <p class="description">
+                Aspiring systems programmer on a journey to master low-level development. 
+                Currently learning Rust, C++, and Lua while exploring the fascinating world 
+                of embedded systems with ESP32.
+            </p>
+            <div class="status-badges">
+                <span class="status-badge">
+                    <span class="status-dot"></span>
+                    Open to Learning
+                </span>
+                <span class="status-badge">
+                    <span class="status-dot"></span>
+                    Seeking Mentorship
+                </span>
+            </div>
+            <div class="btn-group">
+                <a href="#projects" class="btn">Explore Journey</a>
+                <a href="https://github.com/Kha0sK1ng" target="_blank" class="btn btn-secondary">View GitHub</a>
+            </div>
         </div>
-        <div class="scroll-indicator">
+        <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
             <svg viewBox="0 0 30 50">
                 <rect x="5" y="5" width="20" height="30" rx="10"/>
                 <circle cx="15" cy="15" r="3">
@@ -650,126 +1444,258 @@
     <!-- About Section -->
     <section id="about">
         <h2 class="section-title">About Me</h2>
+        <p class="section-subtitle">A beginner developer with big ambitions and endless curiosity</p>
         <div class="about-content fade-in">
-            <div class="about-text">
-                <h3>⚡ Crafting Code with Precision and Chaos</h3>
+            <div class="about-card">
+                <div class="about-icon">🎯</div>
+                <h3>My Mission</h3>
                 <p>
-                    I'm a passionate developer specializing in <strong>systems programming</strong> 
-                    and <strong>low-level development</strong>. My journey revolves around building 
-                    fast, reliable, and memory-safe applications using Rust.
+                    I'm on an exciting journey into the world of systems programming and low-level development. 
+                    As a beginner, I'm fascinated by how computers work at the fundamental level and determined 
+                    to build fast, reliable, and memory-safe applications.
                 </p>
                 <p>
-                    Currently exploring the world of <strong>embedded systems</strong> with ESP32, 
-                    diving deep into memory management, concurrent programming, and the art of 
-                    writing performant code that doesn't compromise on safety.
+                    Every day is a learning opportunity, and I'm committed to growing my skills through 
+                    hands-on projects, documentation, and collaboration with the developer community.
+                </p>
+            </div>
+            
+            <div class="about-card">
+                <div class="about-icon">🛠️</div>
+                <h3>What I'm Learning</h3>
+                <p>
+                    Currently diving deep into three exciting technologies:
                 </p>
                 <div class="tech-stack">
-                    <span class="tech-badge">🦀 Rust</span>
-                    <span class="tech-badge">🔧 ESP32</span>
-                    <span class="tech-badge">🌙 Lua</span>
-                    <span class="tech-badge">⚙️ Systems Design</span>
-                    <span class="tech-badge">🧵 Concurrency</span>
-                    <span class="tech-badge">💾 Memory Management</span>
+                    <span class="tech-badge tooltip" data-tooltip="Learning systems programming">🦀 Rust</span>
+                    <span class="tech-badge tooltip" data-tooltip="Scripting & automation">🌙 Lua</span>
+                    <span class="tech-badge tooltip" data-tooltip="Low-level programming">⚙️ C++</span>
+                    <span class="tech-badge tooltip" data-tooltip="Embedded development">🔧 ESP32</span>
+                    <span class="tech-badge tooltip" data-tooltip="Understanding concurrency">🧵 Async/Await</span>
+                    <span class="tech-badge tooltip" data-tooltip="Memory safety & ownership">💾 Memory Management</span>
                 </div>
             </div>
-            <div class="about-text">
-                <h3>🎯 Current Goals</h3>
+            
+            <div class="about-card">
+                <div class="about-icon">⚡</div>
+                <h3>My Goals for 2025</h3>
                 <ul class="goals-list">
-                    <li>Master Rust and embedded development</li>
-                    <li>Build production-ready projects for portfolio</li>
-                    <li>Improve documentation with visuals</li>
-                    <li>Contribute to open-source projects</li>
-                    <li>Collaborate with fellow developers</li>
+                    <li>Master the fundamentals of Rust programming</li>
+                    <li>Build and deploy 3 production-ready projects</li>
+                    <li>Complete an ESP32 embedded systems project</li>
+                    <li>Contribute to 5+ open-source repositories</li>
+                    <li>Write comprehensive documentation for all projects</li>
+                    <li>Connect with mentors in systems programming</li>
                 </ul>
+            </div>
+        </div>
+        
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Languages Learning</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Hours Coded</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Curiosity Level</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2025</div>
+                <div class="stat-label">Year of Growth</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Journey Timeline Section -->
+    <section id="journey">
+        <h2 class="section-title">My Learning Journey</h2>
+        <p class="section-subtitle">The path from curiosity to competence</p>
+        <div class="journey-section">
+            <div class="timeline fade-in">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Early 2025</div>
+                        <h4 class="timeline-title">🦀 Started Learning Rust</h4>
+                        <p class="timeline-desc">
+                            Fell in love with Rust's approach to memory safety and performance. 
+                            Started with "The Rust Programming Language" book and building small CLI tools.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">March 2025</div>
+                        <h4 class="timeline-title">🌙 Explored Lua Scripting</h4>
+                        <p class="timeline-desc">
+                            Discovered Lua's simplicity and power for scripting. Now using it for 
+                            automation tasks and configuration in larger projects.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">May 2025</div>
+                        <h4 class="timeline-title">⚙️ Diving into C++</h4>
+                        <p class="timeline-desc">
+                            Began studying C++ to understand low-level programming concepts and 
+                            how modern systems are built from the ground up.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">July 2025</div>
+                        <h4 class="timeline-title">🔧 First ESP32 Project</h4>
+                        <p class="timeline-desc">
+                            Got my hands on an ESP32 board and started experimenting with embedded 
+                            development. The intersection of hardware and software fascinates me!
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Present</div>
+                        <h4 class="timeline-title">🚀 Building & Learning</h4>
+                        <p class="timeline-desc">
+                            Actively working on projects, contributing to open source, and connecting 
+                            with the developer community. The journey continues!
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
     <!-- Projects Section -->
     <section id="projects">
-        <h2 class="section-title">Featured Projects</h2>
+        <h2 class="section-title">Projects & Experiments</h2>
+        <p class="section-subtitle">Learning by building, one project at a time</p>
         <div class="projects-grid fade-in">
             <div class="project-card">
-                <div class="project-icon">🦀</div>
-                <h3>Rust Systems Projects</h3>
+                <div class="project-header">
+                    <div class="project-icon">🦀</div>
+                    <span class="project-status learning">Learning</span>
+                </div>
+                <h3>Rust CLI Tools</h3>
                 <p>
-                    Building fast, reliable, and memory-safe applications with Rust. 
-                    Focusing on systems programming, safe concurrency, and performance optimization.
+                    Building command-line applications to learn Rust fundamentals. Working on 
+                    file management utilities, text processors, and system monitoring tools. 
+                    Each project teaches me about ownership, borrowing, and error handling.
                 </p>
                 <div class="project-tech">
                     <span>Rust</span>
-                    <span>Systems Programming</span>
-                    <span>Memory Safety</span>
+                    <span>CLI</span>
+                    <span>Cargo</span>
+                    <span>Error Handling</span>
                 </div>
             </div>
             
             <div class="project-card">
-                <div class="project-icon">🔧</div>
-                <h3>ESP32 Embedded Systems</h3>
+                <div class="project-header">
+                    <div class="project-icon">🔧</div>
+                    <span class="project-status learning">In Progress</span>
+                </div>
+                <h3>ESP32 IoT Experiments</h3>
                 <p>
-                    Experimenting with embedded development on ESP32 microcontrollers. 
-                    Exploring IoT, sensor integration, and real-time systems.
+                    Exploring embedded systems with ESP32. Learning about sensors, WiFi connectivity, 
+                    and real-time data processing. Currently building a temperature monitoring system 
+                    with web interface.
                 </p>
                 <div class="project-tech">
                     <span>ESP32</span>
-                    <span>Embedded</span>
+                    <span>C++</span>
                     <span>IoT</span>
+                    <span>Sensors</span>
                 </div>
             </div>
             
             <div class="project-card">
-                <div class="project-icon">🌙</div>
-                <h3>Lua Scripting</h3>
+                <div class="project-header">
+                    <div class="project-icon">🌙</div>
+                    <span class="project-status">Active</span>
+                </div>
+                <h3>Lua Automation Scripts</h3>
                 <p>
-                    Creating efficient scripts and automation tools with Lua. 
-                    Integrating Lua for configuration and extensibility in larger projects.
+                    Creating practical automation scripts with Lua. From file organization to 
+                    task scheduling, these scripts help me understand scripting patterns and 
+                    Lua's elegant syntax.
                 </p>
                 <div class="project-tech">
                     <span>Lua</span>
-                    <span>Scripting</span>
                     <span>Automation</span>
+                    <span>Scripting</span>
+                    <span>File System</span>
                 </div>
             </div>
             
             <div class="project-card">
-                <div class="project-icon">⚙️</div>
-                <h3>Systems Design & Architecture</h3>
+                <div class="project-header">
+                    <div class="project-icon">⚙️</div>
+                    <span class="project-status learning">Learning</span>
+                </div>
+                <h3>C++ Fundamentals</h3>
                 <p>
-                    Learning and implementing scalable system architectures. 
-                    Focusing on performance, reliability, and maintainability.
+                    Working through C++ projects to understand pointers, memory management, 
+                    and object-oriented programming. Building data structures and algorithms 
+                    from scratch to solidify my understanding.
                 </p>
                 <div class="project-tech">
-                    <span>System Design</span>
-                    <span>Architecture</span>
-                    <span>Scalability</span>
+                    <span>C++</span>
+                    <span>Data Structures</span>
+                    <span>Algorithms</span>
+                    <span>OOP</span>
                 </div>
             </div>
             
             <div class="project-card">
-                <div class="project-icon">🧵</div>
+                <div class="project-header">
+                    <div class="project-icon">🧵</div>
+                    <span class="project-status learning">Exploring</span>
+                </div>
                 <h3>Concurrent Programming</h3>
                 <p>
-                    Exploring safe concurrency patterns in Rust. Building multi-threaded 
-                    applications with focus on data race prevention and performance.
+                    Learning about multi-threading and async programming in Rust. Experimenting 
+                    with parallel processing, race condition prevention, and building thread-safe 
+                    applications.
                 </p>
                 <div class="project-tech">
-                    <span>Concurrency</span>
-                    <span>Multi-threading</span>
+                    <span>Rust</span>
                     <span>Async/Await</span>
+                    <span>Threads</span>
+                    <span>Tokio</span>
                 </div>
             </div>
             
             <div class="project-card">
-                <div class="project-icon">🌐</div>
-                <h3>Open Source Contributions</h3>
+                <div class="project-header">
+                    <div class="project-icon">📚</div>
+                    <span class="project-status">Ongoing</span>
+                </div>
+                <h3>Learning Documentation</h3>
                 <p>
-                    Actively contributing to open-source projects. Collaborating with 
-                    developers worldwide to build better software.
+                    Documenting my learning journey with detailed notes, code examples, and 
+                    tutorials. Sharing what I learn to help other beginners and reinforce 
+                    my own understanding.
                 </p>
                 <div class="project-tech">
-                    <span>Open Source</span>
-                    <span>Collaboration</span>
-                    <span>Community</span>
+                    <span>Markdown</span>
+                    <span>Git</span>
+                    <span>Documentation</span>
+                    <span>Teaching</span>
                 </div>
             </div>
         </div>
@@ -778,120 +1704,308 @@
     <!-- Skills Section -->
     <section id="skills">
         <h2 class="section-title">Technical Skills</h2>
+        <p class="section-subtitle">Currently building my foundation in systems programming</p>
         <div class="skills-container fade-in">
             <div class="skill-category">
                 <h3>💻 Programming Languages</h3>
                 <div class="skill-bars">
                     <div class="skill-bar">
                         <div class="skill-info">
-                            <span class="skill-name">Rust</span>
-                            <span class="skill-level">Advanced</span>
+                            <span class="skill-name">🦀 Rust</span>
+                            <span class="skill-level">Beginner</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-progress="85"></div>
+                            <div class="progress-fill" data-progress="25"></div>
                         </div>
+                        <p class="skill-description">
+                            Learning ownership, borrowing, lifetimes, and building safe concurrent applications. 
+                            Completed basic CLI tools and currently working on more complex projects.
+                        </p>
                     </div>
                     <div class="skill-bar">
                         <div class="skill-info">
-                            <span class="skill-name">Lua</span>
+                            <span class="skill-name">🌙 Lua</span>
                             <span class="skill-level">Intermediate</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-progress="70"></div>
+                            <div class="progress-fill" data-progress="55"></div>
                         </div>
+                        <p class="skill-description">
+                            Comfortable with Lua syntax, tables, metatables, and coroutines. Using it for 
+                            scripting, configuration, and automation tasks.
+                        </p>
                     </div>
                     <div class="skill-bar">
                         <div class="skill-info">
-                            <span class="skill-name">C/C++</span>
-                            <span class="skill-level">Intermediate</span>
+                            <span class="skill-name">⚙️ C++</span>
+                            <span class="skill-level">Beginner</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-progress="65"></div>
+                            <div class="progress-fill" data-progress="20"></div>
                         </div>
+                        <p class="skill-description">
+                            Just started learning C++ fundamentals. Focusing on pointers, memory management, 
+                            and understanding how low-level systems work.
+                        </p>
                     </div>
                 </div>
             </div>
             
             <div class="skill-category">
-                <h3>🔧 Specializations</h3>
+                <h3>🔧 Technical Areas</h3>
                 <div class="skill-bars">
                     <div class="skill-bar">
                         <div class="skill-info">
-                            <span class="skill-name">Systems Programming</span>
-                            <span class="skill-level">Advanced</span>
+                            <span class="skill-name">🔌 Embedded Systems (ESP32)</span>
+                            <span class="skill-level">Beginner</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-progress="80"></div>
+                            <div class="progress-fill" data-progress="30"></div>
                         </div>
+                        <p class="skill-description">
+                            Experimenting with ESP32, learning about GPIO, sensors, WiFi connectivity, 
+                            and real-time operating systems.
+                        </p>
                     </div>
                     <div class="skill-bar">
                         <div class="skill-info">
-                            <span class="skill-name">Embedded Systems (ESP32)</span>
+                            <span class="skill-name">💾 Memory Management</span>
+                            <span class="skill-level">Beginner</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="28"></div>
+                        </div>
+                        <p class="skill-description">
+                            Understanding stack vs heap, manual memory management in C++, and Rust's 
+                            ownership system for memory safety.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🧵 Concurrent Programming</span>
+                            <span class="skill-level">Beginner</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="22"></div>
+                        </div>
+                        <p class="skill-description">
+                            Learning about threads, async/await patterns, race conditions, and building 
+                            thread-safe applications in Rust.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">📝 Documentation & Git</span>
                             <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="50"></div>
+                        </div>
+                        <p class="skill-description">
+                            Writing clear documentation, using Git for version control, and maintaining 
+                            organized project repositories on GitHub.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="skill-category">
+                <h3>🎯 Soft Skills & Learning</h3>
+                <div class="skill-bars">
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🧠 Problem Solving</span>
+                            <span class="skill-level">Growing</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="40"></div>
+                        </div>
+                        <p class="skill-description">
+                            Breaking down complex problems, debugging code systematically, and finding 
+                            elegant solutions through persistence and research.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">📖 Self-Learning</span>
+                            <span class="skill-level">Strong</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" data-progress="70"></div>
                         </div>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-info">
-                            <span class="skill-name">Memory Management</span>
-                            <span class="skill-level">Advanced</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-progress="82"></div>
-                        </div>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-info">
-                            <span class="skill-name">Concurrent Programming</span>
-                            <span class="skill-level">Advanced</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-progress="78"></div>
-                        </div>
+                        <p class="skill-description">
+                            Reading documentation, following tutorials, watching courses, and learning 
+                            from mistakes. Committed to continuous improvement.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     
+    <!-- Learning Resources Section -->
+    <section id="resources">
+        <h2 class="section-title">Learning Resources</h2>
+        <p class="section-subtitle">Resources that are helping me on my journey</p>
+        <div class="resources-grid fade-in">
+            <div class="resource-card">
+                <div class="resource-icon">📘</div>
+                <h4>The Rust Book</h4>
+                <p>The official Rust programming language book. My primary resource for learning Rust fundamentals.</p>
+                <a href="https://doc.rust-lang.org/book/" target="_blank">Read Now →</a>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-icon">🎓</div>
+                <h4>Rustlings</h4>
+                <p>Small exercises to get you used to reading and writing Rust code. Great for hands-on practice!</p>
+                <a href="https://github.com/rust-lang/rustlings" target="_blank">Start Exercises →</a>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-icon">🌙</div>
+                <h4>Lua Documentation</h4>
+                <p>Official Lua reference manual. Essential for understanding Lua's features and standard library.</p>
+                <a href="https://www.lua.org/manual/" target="_blank">Learn More →</a>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-icon">⚙️</div>
+                <h4>LearnCpp.com</h4>
+                <p>Comprehensive C++ tutorials from basics to advanced concepts. Well-structured and beginner-friendly.</p>
+                <a href="https://www.learncpp.com/" target="_blank">Start Learning →</a>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-icon">🔧</div>
+                <h4>ESP32 Docs</h4>
+                <p>Official ESP32 documentation and examples. My go-to resource for embedded systems projects.</p>
+                <a href="https://docs.espressif.com/" target="_blank">Explore Docs →</a>
+            </div>
+            
+            <div class="resource-card">
+                <div class="resource-icon">💡</div>
+                <h4>Rust by Example</h4>
+                <p>A collection of runnable examples that illustrate various Rust concepts and standard libraries.</p>
+                <a href="https://doc.rust-lang.org/rust-by-example/" target="_blank">View Examples →</a>
+            </div>
+        </div>
+        
+        <!-- Code Snippet Example -->
+        <div class="code-snippet fade-in" style="margin-top: 3rem;">
+            <p style="margin-bottom: 1rem; color: var(--text-secondary);">💡 Current learning focus - Rust ownership:</p>
+            <pre style="margin: 0; overflow-x: auto;"><code>fn main() {
+    let s1 = String::from("Hello, Rust!");
+    let s2 = s1; // Ownership moved to s2
+    
+    // println!("{}", s1); // This would error!
+    println!("{}", s2); // This works!
+    
+    // Learning: In Rust, values can only have one owner at a time.
+    // This prevents data races and makes code memory-safe! 🦀
+}</code></pre>
+        </div>
+    </section>
+    
     <!-- Contact Section -->
     <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">Always open to learning, collaboration, and making new connections</p>
         <div class="contact-container fade-in">
             <p class="contact-text">
-                I'm always open to collaborating on interesting projects, contributing to 
-                open-source, or just having a chat about systems programming and embedded development. 
-                Feel free to reach out through any of the platforms below!
+                I'm always excited to connect with fellow developers, especially those willing to share 
+                their knowledge and experience. Whether you're a beginner like me or an experienced 
+                developer who can offer guidance, I'd love to hear from you!
+            </p>
+            <p class="contact-text" style="font-size: 1.2rem; color: var(--accent-primary);">
+                🌟 Currently seeking mentorship in systems programming and embedded development
             </p>
             <div class="social-links">
                 <a href="https://github.com/Kha0sK1ng" target="_blank" class="social-link">
                     <span class="social-icon">🐙</span>
                     <span>GitHub</span>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Check out my projects</span>
                 </a>
                 <a href="https://t.me/kha0sk1ng" target="_blank" class="social-link">
                     <span class="social-icon">✈️</span>
                     <span>Telegram</span>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Quick responses here</span>
                 </a>
-                <a href="#" class="social-link" onclick="alert('Discord: kha0sk1ng'); return false;">
+                <a href="#" class="social-link" onclick="alert('Discord: kha0sk1ng\n\nFeel free to add me!'); return false;">
                     <span class="social-icon">💬</span>
                     <span>Discord</span>
+                    <span style="font-size: 0.9rem; color: var(--text-muted);">Best for collaboration</span>
                 </a>
+            </div>
+            
+            <div style="margin-top: 3rem; padding: 2rem; background: var(--bg-card); border-radius: 15px; border: 2px solid var(--accent-primary);">
+                <h3 style="color: var(--accent-primary); margin-bottom: 1rem; font-size: 1.5rem;">🤝 Looking for:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; text-align: left;">
+                    <div>
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">👨‍🏫 Mentorship</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Guidance from experienced developers</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">🤝 Collaboration</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Working on projects together</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">📚 Learning Partners</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Fellow beginners to learn with</p>
+                    </div>
+                    <div>
+                        <p style="font-weight: 600; margin-bottom: 0.5rem;">💡 Code Reviews</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem;">Feedback on my projects</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
     <!-- Footer -->
     <footer>
-        <p>⚡ Kha0sK1ng — Crafting code with precision and chaos ⚡</p>
+        <p style="font-size: 1.3rem; margin-bottom: 0.5rem;">⚡ Kha0sK1ng — Crafting code with precision and chaos ⚡</p>
         <p style="margin-top: 1rem;">Designed & coded with <span class="rust-logo">🦀</span> by Kha0sK1ng</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">© 2024 All Rights Reserved</p>
+        <p style="margin-top: 0.5rem; font-size: 1rem; color: var(--text-muted);">© 2025 All Rights Reserved</p>
+        <div class="footer-links">
+            <a href="#home" class="footer-link">Back to Top</a>
+            <a href="https://github.com/Kha0sK1ng" target="_blank" class="footer-link">GitHub Profile</a>
+            <a href="#contact" class="footer-link">Get in Touch</a>
+        </div>
+        <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+            "The journey of a thousand lines of code begins with a single commit." 🚀
+        </p>
     </footer>
     
     <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('nav ul');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuBtn.contains(e.target) && !navMenu.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
         // Typing animation for hero section
-        const words = ['Rustacean', 'Developer', 'Systems Programmer', 'Embedded Engineer'];
+        const words = ['Beginner Developer', 'Rustacean 🦀', 'Systems Learner', 'Future Embedded Engineer', 'Code Enthusiast'];
         let wordIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -925,10 +2039,26 @@
         // Start typing animation after page load
         setTimeout(typeEffect, 1000);
         
+        // Navbar scroll effect
+        const nav = document.querySelector('nav');
+        let lastScroll = 0;
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+        
         // Intersection Observer for fade-in animations
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            rootMargin: '0px 0px -100px 0px'
         };
         
         const observer = new IntersectionObserver((entries) => {
@@ -936,6 +2066,7 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
@@ -954,7 +2085,7 @@
                         const progress = bar.getAttribute('data-progress');
                         setTimeout(() => {
                             bar.style.width = progress + '%';
-                        }, 200);
+                        }, 300);
                     });
                     skillObserver.unobserve(entry.target);
                 }
@@ -967,11 +2098,47 @@
             skillObserver.observe(skillsSection);
         }
         
+        // Animate stat numbers
+        const animateStats = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target.querySelector('.stat-number');
+                    const finalValue = statNumber.textContent;
+                    
+                    if (finalValue !== '∞' && !isNaN(parseInt(finalValue))) {
+                        const target = parseInt(finalValue);
+                        let current = 0;
+                        const increment = target / 50;
+                        const duration = 2000;
+                        const stepTime = duration / 50;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                statNumber.textContent = finalValue;
+                                clearInterval(timer);
+                            } else {
+                                statNumber.textContent = Math.floor(current);
+                            }
+                        }, stepTime);
+                    }
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
+        
+        const statsObserver = new IntersectionObserver(animateStats, observerOptions);
+        document.querySelectorAll('.stat-card').forEach(card => {
+            statsObserver.observe(card);
+        });
+        
         // Smooth scroll for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
                 const targetSection = document.querySelector(targetId);
                 
                 if (targetSection) {
@@ -998,26 +2165,33 @@
             });
             
             navLinks.forEach(link => {
-                link.style.color = '';
+                link.classList.remove('active');
                 if (link.getAttribute('href') === '#' + current) {
-                    link.style.color = 'var(--accent-primary)';
+                    link.classList.add('active');
                 }
             });
         });
         
         // Add parallax effect to orbs
+        let ticking = false;
         document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 20;
-                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const orbs = document.querySelectorAll('.orb');
+                    const x = e.clientX / window.innerWidth;
+                    const y = e.clientY / window.innerHeight;
+                    
+                    orbs.forEach((orb, index) => {
+                        const speed = (index + 1) * 15;
+                        orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
         
-        // Add hover effect to project cards
+        // Add hover effect and 3D tilt to project cards
         const projectCards = document.querySelectorAll('.project-card');
         projectCards.forEach(card => {
             card.addEventListener('mouseenter', function() {
@@ -1026,11 +2200,9 @@
             
             card.addEventListener('mouseleave', function() {
                 this.style.zIndex = '1';
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
             });
-        });
-        
-        // Add 3D tilt effect to cards
-        projectCards.forEach(card => {
+            
             card.addEventListener('mousemove', function(e) {
                 const rect = this.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -1039,14 +2211,10 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
+                const rotateX = (y - centerY) / 15;
+                const rotateY = (centerX - x) / 15;
                 
-                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.02)`;
             });
         });
         
@@ -1060,8 +2228,29 @@
             
             if (konamiCode.join(',') === konamiSequence.join(',')) {
                 document.body.style.animation = 'rainbow 2s linear infinite';
+                
+                // Show celebration message
+                const message = document.createElement('div');
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: var(--bg-card);
+                    padding: 3rem;
+                    border-radius: 20px;
+                    border: 3px solid var(--accent-primary);
+                    z-index: 10000;
+                    text-align: center;
+                    font-size: 2rem;
+                    animation: fadeInUp 0.5s;
+                `;
+                message.innerHTML = '🎉 You found the secret! 🦀<br><span style="font-size: 1.2rem;">Keep coding with chaos!</span>';
+                document.body.appendChild(message);
+                
                 setTimeout(() => {
                     document.body.style.animation = '';
+                    message.remove();
                 }, 5000);
                 
                 // Add rainbow animation
@@ -1078,12 +2267,16 @@
         
         // Add particle effect on click
         document.addEventListener('click', (e) => {
+            // Don't create particles on link clicks
+            if (e.target.tagName === 'A' || e.target.closest('a')) return;
             createParticles(e.clientX, e.clientY);
         });
         
         function createParticles(x, y) {
             const colors = ['#ff6b35', '#f7931e', '#ce412b'];
-            for (let i = 0; i < 6; i++) {
+            const particleCount = 8;
+            
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.style.position = 'fixed';
                 particle.style.left = x + 'px';
@@ -1095,7 +2288,7 @@
                 particle.style.pointerEvents = 'none';
                 particle.style.zIndex = '9999';
                 
-                const angle = (Math.PI * 2 * i) / 6;
+                const angle = (Math.PI * 2 * i) / particleCount;
                 const velocity = 2 + Math.random() * 2;
                 
                 document.body.appendChild(particle);
@@ -1125,10 +2318,73 @@
         }
         
         // Console message for curious developers
-        console.log('%c⚡ Kha0sK1ng ⚡', 'font-size: 20px; font-weight: bold; color: #ff6b35;');
-        console.log('%cHey there, fellow developer! 👋', 'font-size: 14px; color: #f7931e;');
-        console.log('%cI see you\'re checking out the code. Feel free to reach out if you want to collaborate!', 'font-size: 12px; color: #a0a0a0;');
-        console.log('%cGitHub: https://github.com/Kha0sK1ng', 'font-size: 12px; color: #ff6b35;');
+        const styles = [
+            'font-size: 24px; font-weight: bold; color: #ff6b35; text-shadow: 2px 2px 4px rgba(255, 107, 53, 0.3);',
+            'font-size: 16px; color: #f7931e;',
+            'font-size: 14px; color: #a0a0a0;',
+            'font-size: 14px; color: #ff6b35; font-weight: bold;'
+        ];
+        
+        console.log('%c⚡ Kha0sK1ng ⚡', styles[0]);
+        console.log('%cHey there, fellow developer! 👋', styles[1]);
+        console.log('%cI see you\'re checking out the code. I\'m a beginner too, so let\'s learn together!', styles[2]);
+        console.log('%cGitHub: https://github.com/Kha0sK1ng', styles[3]);
+        console.log('%cFeel free to reach out if you want to collaborate or share knowledge! 🦀', styles[2]);
+        
+        // Add motivational quotes that change
+        const quotes = [
+            '"The expert in anything was once a beginner." - Helen Hayes',
+            '"Code is like humor. When you have to explain it, it\'s bad." - Cory House',
+            '"Learning to code is learning to create and innovate." - Mitch Resnick',
+            '"Every master was once a beginner. Every pro was once an amateur." - Robin Sharma',
+            '"The best time to plant a tree was 20 years ago. The second best time is now." - Chinese Proverb'
+        ];
+        
+        let quoteIndex = 0;
+        console.log(`%c💡 ${quotes[quoteIndex]}`, 'font-size: 12px; color: #60a5fa; font-style: italic;');
+        
+        // Performance optimization: Debounce scroll events
+        let scrollTimeout;
+        const handleScroll = () => {
+            if (scrollTimeout) {
+                window.cancelAnimationFrame(scrollTimeout);
+            }
+            scrollTimeout = window.requestAnimationFrame(() => {
+                // Scroll-based animations are already handled above
+            });
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // Add loading completion
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+            console.log('%c🚀 Page fully loaded! Ready to explore!', 'font-size: 14px; color: #4ade80; font-weight: bold;');
+        });
+        
+        // Accessibility: Keyboard navigation enhancement
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                // Close mobile menu if open
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+        
+        // Add smooth scroll behavior for all browsers
+        if ('scrollBehavior' in document.documentElement.style === false) {
+            // Polyfill for smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
