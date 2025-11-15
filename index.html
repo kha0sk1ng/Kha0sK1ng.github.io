@@ -1,4 +1,42 @@
-<!DOCTYPE html>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🌙 Lua</span>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="55"></div>
+                        </div>
+                        <p class="skill-description">
+                            Comfortable with Lua syntax, tables, metatables, and coroutines. Using it for 
+                            scripting, configuration, and automation tasks in various projects.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🟢 Node.js / JavaScript</span>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="50"></div>
+                        </div>
+                        <p class="skill-description">
+                            Built websites with Express.js and various small programs. Studied for 4 months back in 2021. 
+                            Good foundation in async programming and web development.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">#️⃣ C#</span>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="48"></div>
+                        </div>
+                        <p class="skill-description">
+                            Worked with C# in 2023, building calculators, day counters, and stopwatches. 
+                            Learned OOP principles and Windows application development.
+                        </p>
+                    </div><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1330,7 +1368,63 @@
             }
         }
         
-        /* Custom scrollbar */
+        /* Custom cursor trail effect */
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            background: radial-gradient(circle, var(--accent-primary), transparent);
+            opacity: 0.6;
+            transition: transform 0.15s ease-out;
+        }
+        
+        /* Mouse follower glow */
+        .mouse-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.15), transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+            filter: blur(40px);
+        }
+        
+        /* Ripple effect on click */
+        @keyframes ripple {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .ripple {
+            position: fixed;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            animation: ripple 0.6s ease-out;
+        }
+        
+        /* Magnetic effect for interactive elements */
+        .magnetic {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Parallax layers for depth */
+        .parallax-layer {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
         ::-webkit-scrollbar {
             width: 12px;
         }
@@ -1448,31 +1542,40 @@
         <div class="about-content fade-in">
             <div class="about-card">
                 <div class="about-icon">🎯</div>
-                <h3>My Mission</h3>
+                <h3>Who Am I?</h3>
                 <p>
-                    I'm on an exciting journey into the world of systems programming and low-level development. 
-                    As a beginner, I'm fascinated by how computers work at the fundamental level and determined 
-                    to build fast, reliable, and memory-safe applications.
+                    I'm a <strong>13-year-old developer</strong> who started coding at 10. What began as curiosity 
+                    turned into a passion for understanding how computers work at the lowest level.
                 </p>
                 <p>
-                    Every day is a learning opportunity, and I'm committed to growing my skills through 
-                    hands-on projects, documentation, and collaboration with the developer community.
+                    After exploring <strong>Python, Node.js, Java, C#, and C++</strong>, I found my true calling in 
+                    <strong>Rust</strong>. I love its strict compiler, memory safety guarantees, and the perfect balance 
+                    between low-level control and high-level abstractions.
+                </p>
+                <p style="color: var(--accent-primary); font-weight: 600; margin-top: 1rem;">
+                    🦀 Rust feels like home - strict compiler, memory safety, and zero-cost abstractions!
                 </p>
             </div>
             
             <div class="about-card">
                 <div class="about-icon">🛠️</div>
-                <h3>What I'm Learning</h3>
-                <p>
-                    Currently diving deep into three exciting technologies:
-                </p>
+                <h3>My Tech Stack</h3>
+                <p><strong>Primary Focus:</strong></p>
                 <div class="tech-stack">
-                    <span class="tech-badge tooltip" data-tooltip="Learning systems programming">🦀 Rust</span>
+                    <span class="tech-badge tooltip" data-tooltip="My favorite language">🦀 Rust</span>
+                    <span class="tech-badge tooltip" data-tooltip="Advanced low-level programming">⚙️ C++</span>
                     <span class="tech-badge tooltip" data-tooltip="Scripting & automation">🌙 Lua</span>
-                    <span class="tech-badge tooltip" data-tooltip="Low-level programming">⚙️ C++</span>
-                    <span class="tech-badge tooltip" data-tooltip="Embedded development">🔧 ESP32</span>
-                    <span class="tech-badge tooltip" data-tooltip="Understanding concurrency">🧵 Async/Await</span>
-                    <span class="tech-badge tooltip" data-tooltip="Memory safety & ownership">💾 Memory Management</span>
+                    <span class="tech-badge tooltip" data-tooltip="Embedded systems">🔧 ESP32</span>
+                </div>
+                <p style="margin-top: 1.5rem;"><strong>Development Environment:</strong></p>
+                <div class="tech-stack">
+                    <span class="tech-badge">🐧 Arch Linux</span>
+                    <span class="tech-badge">🪟 Hyprland</span>
+                    <span class="tech-badge">💻 Windows 11</span>
+                    <span class="tech-badge">🔧 RustRover</span>
+                    <span class="tech-badge">📝 VS Code</span>
+                    <span class="tech-badge">✍️ Sublime Text</span>
+                    <span class="tech-badge">🤖 AI Tools</span>
                 </div>
             </div>
             
@@ -1493,38 +1596,39 @@
         <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-number">3</div>
-                <div class="stat-label">Languages Learning</div>
+                <div class="stat-number">13</div>
+                <div class="stat-label">Years Old</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">100+</div>
-                <div class="stat-label">Hours Coded</div>
+                <div class="stat-number">4</div>
+                <div class="stat-label">Years Coding</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">∞</div>
-                <div class="stat-label">Curiosity Level</div>
+                <div class="stat-number">7</div>
+                <div class="stat-label">Languages Tried</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number">2025</div>
-                <div class="stat-label">Year of Growth</div>
+                <div class="stat-number">1</div>
+                <div class="stat-label">True Love (Rust)</div>
             </div>
         </div>
     </section>
     
     <!-- Journey Timeline Section -->
     <section id="journey">
-        <h2 class="section-title">My Learning Journey</h2>
-        <p class="section-subtitle">The path from curiosity to competence</p>
+        <h2 class="section-title">My Journey</h2>
+        <p class="section-subtitle">From Python to Rust - 4 years of exploration and growth</p>
         <div class="journey-section">
             <div class="timeline fade-in">
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">Early 2025</div>
-                        <h4 class="timeline-title">🦀 Started Learning Rust</h4>
+                        <div class="timeline-date">Mid 2021 - Age 10</div>
+                        <h4 class="timeline-title">🐍 First Steps with Python</h4>
                         <p class="timeline-desc">
-                            Fell in love with Rust's approach to memory safety and performance. 
-                            Started with "The Rust Programming Language" book and building small CLI tools.
+                            Started my programming journey by learning about computers. Python was my first language, 
+                            but I quickly realized it was too easy for what I wanted to achieve. I craved more complexity 
+                            and control over the system.
                         </p>
                     </div>
                 </div>
@@ -1532,11 +1636,11 @@
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">March 2025</div>
-                        <h4 class="timeline-title">🌙 Explored Lua Scripting</h4>
+                        <div class="timeline-date">Late 2021</div>
+                        <h4 class="timeline-title">🟢 Node.js & Web Development</h4>
                         <p class="timeline-desc">
-                            Discovered Lua's simplicity and power for scripting. Now using it for 
-                            automation tasks and configuration in larger projects.
+                            After a few months, I moved to Node.js. Started with small programs, then built a website 
+                            using Express.js. Studied it for 4 months, but it still didn't feel like the right fit for me.
                         </p>
                     </div>
                 </div>
@@ -1544,11 +1648,11 @@
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">May 2025</div>
-                        <h4 class="timeline-title">⚙️ Diving into C++</h4>
+                        <div class="timeline-date">Mid 2022</div>
+                        <h4 class="timeline-title">☕ Java Discovery</h4>
                         <p class="timeline-desc">
-                            Began studying C++ to understand low-level programming concepts and 
-                            how modern systems are built from the ground up.
+                            Began learning Java, and I really liked its syntax at first. But things didn't go as planned. 
+                            Started searching for languages that would truly fit my goals and interests.
                         </p>
                     </div>
                 </div>
@@ -1556,11 +1660,11 @@
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">July 2025</div>
-                        <h4 class="timeline-title">🔧 First ESP32 Project</h4>
+                        <div class="timeline-date">Early 2023</div>
+                        <h4 class="timeline-title">#️⃣ C# on Windows</h4>
                         <p class="timeline-desc">
-                            Got my hands on an ESP32 board and started experimenting with embedded 
-                            development. The intersection of hardware and software fascinates me!
+                            Discovered C# while using Windows. It seemed like the best fit at the time. Built small projects: 
+                            calculators, day counters, stopwatches, and more. Learned a lot, but still searching for "the one".
                         </p>
                     </div>
                 </div>
@@ -1568,11 +1672,38 @@
                 <div class="timeline-item">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-date">Present</div>
-                        <h4 class="timeline-title">🚀 Building & Learning</h4>
+                        <div class="timeline-date">Early 2024</div>
+                        <h4 class="timeline-title">⚙️ Fell in Love with C++</h4>
                         <p class="timeline-desc">
-                            Actively working on projects, contributing to open source, and connecting 
-                            with the developer community. The journey continues!
+                            Finally met my first true love in programming - C++! Loved its complexity, syntax, and direct 
+                            memory access. Started with calculators like in C#, then discovered CS2 cheat development and 
+                            dove deep into game hacking. This continued through 2024...
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mid 2025</div>
+                        <h4 class="timeline-title">🦀 Found My True Calling - Rust</h4>
+                        <p class="timeline-desc">
+                            C++ became too complex with all the pointer management. Took many "choose your language" quizzes, 
+                            and Rust consistently came up as my perfect match. The strict compiler is a dream come true! 
+                            Started learning Rust and immediately fell in love. This is where I belong.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Present - Age 13</div>
+                        <h4 class="timeline-title">🚀 Building the Future</h4>
+                        <p class="timeline-desc">
+                            Now coding on Arch Linux with Hyprland, using RustRover, VS Code, and Sublime Text. 
+                            Mastering Rust's ownership system, building projects, and contributing to the community. 
+                            The journey continues with passion and purpose!
                         </p>
                     </div>
                 </div>
@@ -1712,40 +1843,27 @@
                     <div class="skill-bar">
                         <div class="skill-info">
                             <span class="skill-name">🦀 Rust</span>
-                            <span class="skill-level">Beginner</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-progress="25"></div>
-                        </div>
-                        <p class="skill-description">
-                            Learning ownership, borrowing, lifetimes, and building safe concurrent applications. 
-                            Completed basic CLI tools and currently working on more complex projects.
-                        </p>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-info">
-                            <span class="skill-name">🌙 Lua</span>
                             <span class="skill-level">Intermediate</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-progress="55"></div>
+                            <div class="progress-fill" data-progress="45"></div>
                         </div>
                         <p class="skill-description">
-                            Comfortable with Lua syntax, tables, metatables, and coroutines. Using it for 
-                            scripting, configuration, and automation tasks.
+                            My current passion! Learning ownership, borrowing, lifetimes, and building safe concurrent applications. 
+                            The strict compiler is exactly what I needed after C++. Building CLI tools and system utilities.
                         </p>
                     </div>
                     <div class="skill-bar">
                         <div class="skill-info">
                             <span class="skill-name">⚙️ C++</span>
-                            <span class="skill-level">Beginner</span>
+                            <span class="skill-level">Advanced</span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-progress="20"></div>
+                            <div class="progress-fill" data-progress="70"></div>
                         </div>
                         <p class="skill-description">
-                            Just started learning C++ fundamentals. Focusing on pointers, memory management, 
-                            and understanding how low-level systems work.
+                            Spent over a year mastering C++. Built everything from calculators to CS2 game hacks. 
+                            Deep understanding of pointers, memory management, and low-level system interactions.
                         </p>
                     </div>
                 </div>
@@ -1757,53 +1875,79 @@
                     <div class="skill-bar">
                         <div class="skill-info">
                             <span class="skill-name">🔌 Embedded Systems (ESP32)</span>
-                            <span class="skill-level">Beginner</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-progress="30"></div>
-                        </div>
-                        <p class="skill-description">
-                            Experimenting with ESP32, learning about GPIO, sensors, WiFi connectivity, 
-                            and real-time operating systems.
-                        </p>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-info">
-                            <span class="skill-name">💾 Memory Management</span>
-                            <span class="skill-level">Beginner</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-progress="28"></div>
-                        </div>
-                        <p class="skill-description">
-                            Understanding stack vs heap, manual memory management in C++, and Rust's 
-                            ownership system for memory safety.
-                        </p>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-info">
-                            <span class="skill-name">🧵 Concurrent Programming</span>
-                            <span class="skill-level">Beginner</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-progress="22"></div>
-                        </div>
-                        <p class="skill-description">
-                            Learning about threads, async/await patterns, race conditions, and building 
-                            thread-safe applications in Rust.
-                        </p>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-info">
-                            <span class="skill-name">📝 Documentation & Git</span>
                             <span class="skill-level">Intermediate</span>
                         </div>
                         <div class="progress-bar">
                             <div class="progress-fill" data-progress="50"></div>
                         </div>
                         <p class="skill-description">
-                            Writing clear documentation, using Git for version control, and maintaining 
-                            organized project repositories on GitHub.
+                            Working with ESP32 microcontrollers, learning about GPIO, sensors, WiFi connectivity, 
+                            and real-time systems. Combining C++ and Rust knowledge for embedded projects.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">💾 Memory Management</span>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="75"></div>
+                        </div>
+                        <p class="skill-description">
+                            Deep understanding from C++ experience with pointers, heap/stack, manual memory management. 
+                            Now appreciating Rust's ownership system for safe memory handling without garbage collection.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🧵 Concurrent Programming</span>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="55"></div>
+                        </div>
+                        <p class="skill-description">
+                            Understanding threads, async/await patterns, race conditions. Learned from C++ multithreading, 
+                            now exploring Rust's safe concurrency model with fearless parallelism.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🎮 Game Development & Reverse Engineering</span>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="60"></div>
+                        </div>
+                        <p class="skill-description">
+                            Developed CS2 cheats in C++, learning memory manipulation, hooking, pattern scanning, 
+                            and understanding game internals. Great experience in low-level system interaction.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">🐧 Linux & System Administration</span>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="72"></div>
+                        </div>
+                        <p class="skill-description">
+                            Daily driver: Arch Linux with Hyprland WM. Comfortable with terminal, shell scripting, 
+                            system configuration, and package management. Also use Windows 11 for dual-boot setup.
+                        </p>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-info">
+                            <span class="skill-name">📝 Documentation & Git</span>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-progress="68"></div>
+                        </div>
+                        <p class="skill-description">
+                            Writing clear documentation, using Git for version control, maintaining organized repositories. 
+                            Using RustRover, VS Code, and Sublime Text for development with AI assistance.
                         </p>
                     </div>
                 </div>
@@ -2005,7 +2149,7 @@
         });
         
         // Typing animation for hero section
-        const words = ['Beginner Developer', 'Rustacean 🦀', 'Systems Learner', 'Future Embedded Engineer', 'Code Enthusiast'];
+        const words = ['13 y/o Developer', 'Rustacean 🦀', 'Systems Programmer', 'C++ Veteran', 'Linux Enthusiast', 'Memory Safety Advocate'];
         let wordIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -2327,17 +2471,18 @@
         
         console.log('%c⚡ Kha0sK1ng ⚡', styles[0]);
         console.log('%cHey there, fellow developer! 👋', styles[1]);
-        console.log('%cI see you\'re checking out the code. I\'m a beginner too, so let\'s learn together!', styles[2]);
+        console.log('%cI\'m 13 years old and I\'ve been coding for 4 years. Started at 10 with Python!', styles[2]);
+        console.log('%cJourney: Python → Node.js → Java → C# → C++ → Rust 🦀', styles[2]);
         console.log('%cGitHub: https://github.com/Kha0sK1ng', styles[3]);
-        console.log('%cFeel free to reach out if you want to collaborate or share knowledge! 🦀', styles[2]);
+        console.log('%cFeel free to reach out if you want to collaborate or share knowledge!', styles[2]);
         
         // Add motivational quotes that change
         const quotes = [
             '"The expert in anything was once a beginner." - Helen Hayes',
-            '"Code is like humor. When you have to explain it, it\'s bad." - Cory House',
-            '"Learning to code is learning to create and innovate." - Mitch Resnick',
-            '"Every master was once a beginner. Every pro was once an amateur." - Robin Sharma',
-            '"The best time to plant a tree was 20 years ago. The second best time is now." - Chinese Proverb'
+            '"Started coding at 10, mastering systems at 13." - Kha0sK1ng',
+            '"From Python to Rust: A 4-year journey of discovery." - My Story',
+            '"The best time to start was yesterday. The second best is now." - Wisdom',
+            '"C++ taught me pointers. Rust taught me safety." - Experience'
         ];
         
         let quoteIndex = 0;
